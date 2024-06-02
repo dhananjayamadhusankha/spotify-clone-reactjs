@@ -12,7 +12,7 @@ import React from "react";
 // bg-blue-500 h-[15%] rounded flex flex-col justify-around
 const Sidebar = () => {
   return (
-    <div className="text-gray-500 p-5 border-r border-gray-900">
+    <div className="text-gray-500 p-5 border-r border-gray-900 hidden lg:flex flex-col">
       <div className="space-y-4">
         <button className="flex items-center space-x-2 hover:text-white">
           <Home className="h-5 w-5" />
