@@ -1,5 +1,5 @@
 import React from "react";
-import { assets, songsData } from "../assets/assets";
+import { songsData } from "../assets/assets";
 import {
   GalleryVertical,
   Maximize2,
@@ -35,11 +35,11 @@ const Player = () => {
           <Repeat2 className="cursor-pointer" />
         </div>
         <div className="flex items-center gap-5">
-          <p>1.06</p>
+          <p className="text-sm">1.06</p>
           <div className="w-[60vw] max-w-[500px] bg-white rounded-full cursor-pointer">
             <hr className="h-1 border-none w-0 bg-green-800 rounded-full" />
           </div>
-          <p>3.20</p>
+          <p className="text-sm">3.20</p>
         </div>
       </div>
       <div className="hidden opacity-75 items-center gap-2 lg:flex">
