@@ -30,32 +30,34 @@ const DisplayAlbum = () => {
           </p>
         </div>
       </div>
-      <div className="grid grid-cols-3 sm:grid-cols-4 mt-10 mb-4 pl-2 text-[#a7a7a7]">
-        <p>
-          #<b>Title</b>
-        </p>
-        <p>Album</p>
-        <p className="hidden sm:block">Date Added</p>
-        <Clock className="m-auto" />
-      </div>
-      <hr className="border-[#a7a7a7] mb-2" />
-      {songsData.map((item, index) => (
-        <div
-          className="grid grid-cols-3 sm:grid-cols-4 gap-3 p-2 items-center hover:bg-[#ffffff2b] cursor-pointer rounded-lg overflow-auto"
-          key={index}
-        >
-          <p className="flex gap-3 md:items-center">
-            <p className="text-[#a7a7a7]">{index + 1}</p>
-            <div className="flex flex-col gap-2 md:flex-row md:items-center">
-              <img src={item.image} alt={item.name} className="w-12" />
-              <p>{item.name}</p>
-            </div>
+      <div className="text-sm">
+        <div className="grid grid-cols-3 sm:grid-cols-4 mt-10 mb-4 pl-2 text-[#a7a7a7]">
+          <p>
+            #<b>Title</b>
           </p>
-          <p>{albumData.name}</p>
-          <p className="hidden sm:block">5 days ago</p>
-          <p className="m-auto">{item.duration}</p>
+          <p>Album</p>
+          <p className="hidden sm:block">Date Added</p>
+          <Clock className="m-auto" />
         </div>
-      ))}
+        <hr className="border-[#a7a7a7] mb-2" />
+        {songsData.map((item, index) => (
+          <div
+            className="grid grid-cols-3 sm:grid-cols-4 gap-3 p-2 items-center hover:bg-[#ffffff2b] cursor-pointer rounded-lg overflow-auto"
+            key={index}
+          >
+            <p className="flex gap-3 md:items-center">
+              <p className="text-[#a7a7a7]">{index + 1}</p>
+              <div className="flex flex-col gap-2 md:flex-row md:items-center">
+                <img src={item.image} alt={item.name} className="w-12" />
+                <p>{item.name}</p>
+              </div>
+            </p>
+            <p>{albumData.name}</p>
+            <p className="hidden sm:block">5 days ago</p>
+            <p className="m-auto">{item.duration}</p>
+          </div>
+        ))}
+      </div>
     </>
   );
 };

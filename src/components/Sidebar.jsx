@@ -7,14 +7,18 @@ import {
   SearchIcon,
 } from "lucide-react";
 import React from "react";
-// bg-[#121212]
-// w-[25%] h-full p-2 flex-col gap-2 lg:flex text-white
-// bg-blue-500 h-[15%] rounded flex flex-col justify-around
+import { useNavigate } from "react-router-dom";
+
 const Sidebar = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="text-gray-500 p-5 border-r border-gray-900 hidden lg:flex flex-col">
       <div className="space-y-4">
-        <button className="flex items-center space-x-2 hover:text-white">
+        <button
+          onClick={() => navigate("/")}
+          className="flex items-center space-x-2 hover:text-white"
+        >
           <Home className="h-5 w-5" />
           <p className="font-semibold">Home</p>
         </button>
