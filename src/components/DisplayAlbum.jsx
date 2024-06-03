@@ -9,6 +9,7 @@ const DisplayAlbum = () => {
   const { id } = useParams();
   const albumData = albumsData[id];
   console.log(albumData);
+
   return (
     <>
       <Navbar />
@@ -40,13 +41,15 @@ const DisplayAlbum = () => {
       <hr className="border-[#a7a7a7] mb-2" />
       {songsData.map((item, index) => (
         <div
-          className="grid grid-cols-3 sm:grid-cols-4 p-2 items-center hover:bg-[#ffffff2b] cursor-pointer rounded-lg overflow-auto"
+          className="grid grid-cols-3 sm:grid-cols-4 gap-3 p-2 items-center hover:bg-[#ffffff2b] cursor-pointer rounded-lg overflow-auto"
           key={index}
         >
-          <p className="flex gap-2 items-center">
+          <p className="flex gap-3 md:items-center">
             <p className="text-[#a7a7a7]">{index + 1}</p>
-            <img src={item.image} alt={item.name} className="w-12" />
-            <p>{item.name}</p>
+            <div className="flex flex-col gap-2 md:flex-row md:items-center">
+              <img src={item.image} alt={item.name} className="w-12" />
+              <p>{item.name}</p>
+            </div>
           </p>
           <p>{albumData.name}</p>
           <p className="hidden sm:block">5 days ago</p>
