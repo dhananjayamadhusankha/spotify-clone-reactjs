@@ -2,6 +2,7 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 import DisplayPage from "./DisplayPage";
 import DisplayAlbum from "./DisplayAlbum";
+import DisplaySongs from "./DisplaySongs";
 
 const Display = () => {
   return (
@@ -9,6 +10,7 @@ const Display = () => {
       <Routes>
         <Route path="/" element={<DisplayPage />} />
         <Route path="/album/:id" element={<DisplayAlbum />} />
+        <Route path="/songs/:id" element={<DisplaySongs />} />
       </Routes>
     </div>
   );
