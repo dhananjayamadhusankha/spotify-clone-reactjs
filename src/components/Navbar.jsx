@@ -17,9 +17,9 @@ const Navbar = () => {
         </div>
       </div>
         <div className=" flex gap-4 items-center mt-4">
-          <button className=" bg-white px-4 py-1 text-black rounded-full cursor-pointer">All</button>
-          <button className="px-4 py-1 rounded-full text-gray-500 cursor-pointer hover:text-white">Music</button>
-          <button className="px-4 py-1 rounded-full text-gray-500 cursor-pointer hover:text-white">Podcasts</button>
+          <button className="bg-white px-4 py-1 text-black rounded-full cursor-pointer hover:bg-gray-200">All</button>
+          <button className="px-4 py-1 rounded-full text-gray-300 cursor-pointer hover:text-white">Music</button>
+          <button className="px-4 py-1 rounded-full text-gray-300 cursor-pointer hover:text-white">Podcasts</button>
         </div>
     </>
   );
