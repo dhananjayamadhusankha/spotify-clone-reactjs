@@ -48,7 +48,7 @@ const Player = () => {
         <GalleryVertical className="w-5" />
         <MonitorSpeaker className="w-5" />
         <Volume1 className="w-5" />
-        <input type="range" min={0} max={100} step={1} className=" accent-green-500" />
+        <input type="range" min={0} max={100} step={1} className="accent-[#1ed760]" />
         <PictureInPicture2 className="w-5" />
         <Maximize2 className="w-5" />
       </div>
