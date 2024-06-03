@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import Navbar from "./Navbar";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { albumsData, songsData } from "../assets/assets";
 import SpotifyLogo from "../../public/spotify-icon.svg";
 import { Clock } from "lucide-react";
@@ -8,7 +8,6 @@ import { Clock } from "lucide-react";
 const DisplayAlbum = () => {
   const { id } = useParams();
   const albumData = albumsData[id];
-  console.log(albumData);
 
   return (
     <>

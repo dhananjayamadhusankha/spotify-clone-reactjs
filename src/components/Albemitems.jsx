@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 
 const Albemitems = ({ id, name, image, desc }) => {
-  console.log("id>>>", id)
+  // console.log("id>>>", id)
   const navigate = useNavigate();
   return (
     <div
