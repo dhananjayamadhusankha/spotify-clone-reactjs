@@ -7,7 +7,6 @@ const PlayerContextProvider = (props) => {
   console.log("props>>>>>>>>", props);
 
   const audioRef = useRef();
-  const seekBg = useRef();
   const seekBar = useRef();
 
   const [track, setTrack] = useState(songsData[0]);
@@ -48,6 +47,11 @@ const PlayerContextProvider = (props) => {
             minutes: Math.floor(audioRef.current.duration / 60),
           },
         });
+
+        if (seekBar.current) {
+          seekBar.current.value =
+            (audioRef.current.currentTime / audioRef.current.duration) * 100;
+        }
       };
     }, 1000);
   }, [audioRef]);
@@ -55,7 +59,6 @@ const PlayerContextProvider = (props) => {
   const contextValue = {
     audioRef,
     seekBar,
-    seekBg,
     track,
     setTrack,
     playerStatus,
@@ -64,7 +67,7 @@ const PlayerContextProvider = (props) => {
     setTime,
     play,
     pause,
-    handleSeek
+    handleSeek,
   };
 
   return (
