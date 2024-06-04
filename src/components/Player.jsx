@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import {
+  FastForward,
   GalleryVertical,
   Maximize2,
   Mic2,
@@ -7,8 +8,6 @@ import {
   Pause,
   PictureInPicture2,
   Play,
-  Repeat2,
-  Shuffle,
   SkipBack,
   SkipForward,
   SquarePlay,
@@ -17,8 +16,23 @@ import {
 import { PlayerContext } from "../context/PlayerContext";
 
 const Player = () => {
-  const { track, seekBar, handleSeek, play, pause, playerStatus, time } =
-    useContext(PlayerContext);
+  const {
+    track,
+    seekBar,
+    handleSeek,
+    play,
+    pause,
+    playerStatus,
+    time,
+    backRef,
+    playPrevious,
+    nextRef,
+    playNext,
+    skipForward,
+    skipBackward,
+    volume,
+    setVolume,
+  } = useContext(PlayerContext);
 
   const formatTime = (minutes, seconds) => {
     return `${minutes.toString().padStart(2, "0")}:${seconds
@@ -38,15 +52,33 @@ const Player = () => {
 
       <div className="flex flex-col items-center gap-1 m-auto w-full max-w-2xl px-4">
         <div className="flex gap-4">
-          <Shuffle className="cursor-pointer" />
-          <SkipBack className="cursor-pointer" fill="white" />
+          <FastForward
+            onClick={skipBackward}
+            className="cursor-pointer rotate-180"
+            fill="white"
+          />
+          <SkipBack
+            ref={backRef}
+            onClick={playPrevious}
+            className="cursor-pointer"
+            fill="white"
+          />
           {playerStatus ? (
             <Pause onClick={pause} className="cursor-pointer" fill="white" />
           ) : (
             <Play onClick={play} className="cursor-pointer" fill="white" />
           )}
-          <SkipForward className="cursor-pointer" fill="white" />
-          <Repeat2 className="cursor-pointer" />
+          <SkipForward
+            ref={nextRef}
+            onClick={playNext}
+            className="cursor-pointer"
+            fill="white"
+          />
+          <FastForward
+            onClick={skipForward}
+            className="cursor-pointer"
+            fill="white"
+          />
         </div>
         <div className="flex items-center gap-5 w-full">
           <span className="text-sm">
@@ -55,6 +87,7 @@ const Player = () => {
           <input
             type="range"
             ref={seekBar}
+            defaultValue={0}
             className=" flex-grow accent-[#1ed760]"
             onChange={handleSeek}
           />
@@ -74,8 +107,12 @@ const Player = () => {
           min={0}
           max={100}
           step={1}
+          value={volume}
+          defaultValue={0}
+          onChange={(e) => setVolume(e.target.value)}
           className="accent-[#1ed760] w-20 sm:w-24 lg:w-36"
         />
+        <span className="text-sm">{volume}</span>
         <PictureInPicture2 className="w-5 hidden lg:flex" />
         <Maximize2 className="w-5 hidden lg:flex" />
       </div>
