@@ -63,21 +63,21 @@ const Player = () => {
           </span>
         </div>
       </div>
-      <div className="hidden opacity-75 items-center gap-2 lg:flex">
-        <SquarePlay className="w-5" />
-        <Mic2 className="w-5" />
-        <GalleryVertical className="w-5" />
-        <MonitorSpeaker className="w-5" />
+      <div className="flex opacity-75 items-center gap-2 ">
+        <SquarePlay className="w-5 hidden lg:flex" />
+        <Mic2 className="w-5 hidden lg:flex" />
+        <GalleryVertical className="w-5 hidden lg:flex" />
+        <MonitorSpeaker className="w-5 hidden lg:flex" />
         <Volume1 className="w-5" />
         <input
           type="range"
           min={0}
           max={100}
           step={1}
-          className="accent-[#1ed760]"
+          className="accent-[#1ed760] w-20 sm:w-24 lg:w-36"
         />
-        <PictureInPicture2 className="w-5" />
-        <Maximize2 className="w-5" />
+        <PictureInPicture2 className="w-5 hidden lg:flex" />
+        <Maximize2 className="w-5 hidden lg:flex" />
       </div>
     </div>
   );

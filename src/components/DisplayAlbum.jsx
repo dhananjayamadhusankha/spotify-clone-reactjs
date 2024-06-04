@@ -1,13 +1,16 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useContext } from "react";
 import Navbar from "./Navbar";
 import { useLocation, useParams } from "react-router-dom";
 import { albumsData, songsData } from "../assets/assets";
 import SpotifyLogo from "../../public/spotify-icon.svg";
 import { Clock } from "lucide-react";
+import { PlayerContext } from "../context/PlayerContext";
 
 const DisplayAlbum = () => {
   const { id } = useParams();
   const albumData = albumsData[id];
+
+  const { playWithId } = useContext(PlayerContext);
 
   return (
     <>
@@ -41,6 +44,7 @@ const DisplayAlbum = () => {
         <hr className="border-[#a7a7a7] mb-2" />
         {songsData.map((item, index) => (
           <div
+            onClick={() => playWithId(item.id)}
             className="grid grid-cols-3 sm:grid-cols-4 gap-3 p-2 items-center hover:bg-[#ffffff2b] cursor-pointer rounded-lg overflow-auto"
             key={index}
           >
