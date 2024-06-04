@@ -4,11 +4,14 @@ import { songsData } from "../assets/assets";
 export const PlayerContext = createContext();
 
 const PlayerContextProvider = (props) => {
-  console.log("props>>>>>>>>", props);
+  // console.log("props>>>>>>>>", props);
 
   const audioRef = useRef();
   const seekBar = useRef();
+  const backRef = useRef(null);
+  const nextRef = useRef(null);
 
+  const [volume, setVolume] = useState(60);
   const [track, setTrack] = useState(songsData[0]);
   const [playerStatus, setPlayerStatus] = useState(false);
   const [time, setTime] = useState({
@@ -38,7 +41,38 @@ const PlayerContextProvider = (props) => {
     await setTrack(songsData[id]);
     await audioRef.current.play();
     setPlayerStatus(true);
-  }
+  };
+
+  const playPrevious = async () => {
+    if (track.id > 0) {
+      await setTrack(songsData[track.id - 1]);
+      await audioRef.current.play();
+      // backRef.current.classList.add("allowed");
+      setPlayerStatus(true);
+    } else {
+      backRef.current.classList.add("not-allowed");
+    }
+  };
+
+  const playNext = async () => {
+    console.log(track.id);
+    if (track.id < songsData.length - 1) {
+      await setTrack(songsData[track.id + 1]);
+      await audioRef.current.play();
+      // nextRef.current.classList.add("allowed");
+      setPlayerStatus(true);
+    } else {
+      nextRef.current.classList.add("not-allowed");
+    }
+  };
+
+  const skipForward = () => {
+    audioRef.current.currentTime += 15;
+  };
+
+  const skipBackward = () => {
+    audioRef.current.currentTime -= 15;
+  };
 
   useEffect(() => {
     setTimeout(() => {
@@ -62,6 +96,12 @@ const PlayerContextProvider = (props) => {
     }, 1000);
   }, [audioRef]);
 
+  useEffect(() => {
+    if (audioRef) {
+      audioRef.current.volume = volume / 100;
+    }
+  }, [volume, audioRef]);
+
   const contextValue = {
     audioRef,
     seekBar,
@@ -74,7 +114,15 @@ const PlayerContextProvider = (props) => {
     play,
     pause,
     handleSeek,
-    playWithId
+    playWithId,
+    backRef,
+    playPrevious,
+    playNext,
+    nextRef,
+    skipForward,
+    skipBackward,
+    volume,
+    setVolume,
   };
 
   return (
