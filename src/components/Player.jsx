@@ -19,6 +19,13 @@ import { PlayerContext } from "../context/PlayerContext";
 const Player = () => {
   const { track, seekBar, handleSeek, play, pause, playerStatus, time } =
     useContext(PlayerContext);
+
+  const formatTime = (minutes, seconds) => {
+    return `${minutes.toString().padStart(2, "0")}:${seconds
+      .toString()
+      .padStart(2, "0")}`;
+  };
+
   return (
     <div className="h-[10%] bg-black flex justify-between items-center text-white px-4">
       <div className="flex items-center gap-4">
@@ -42,18 +49,18 @@ const Player = () => {
           <Repeat2 className="cursor-pointer" />
         </div>
         <div className="flex items-center gap-5 w-full">
-          <span className="text-sm">{time.currentTime.minutes}:{time.currentTime.seconds}</span>
-          {/* <div
-            ref={seekBg}
-            className="w-[60vw] max-w-[500px] bg-white rounded-full cursor-pointer"
-          >
-            <hr
-              ref={seekBar}
-              className="h-1 border-none w-0 bg-green-800 rounded-full"
-            />
-          </div> */}
-          <input type="range" ref={seekBar} className=" flex-grow accent-[#1ed760]" onChange={handleSeek} />
-          <span className="text-sm">{time.totalTime.minutes}:{time.totalTime.seconds}</span>
+          <span className="text-sm">
+            {formatTime(time.currentTime.minutes, time.currentTime.seconds)}
+          </span>
+          <input
+            type="range"
+            ref={seekBar}
+            className=" flex-grow accent-[#1ed760]"
+            onChange={handleSeek}
+          />
+          <span className="text-sm">
+            {formatTime(time.totalTime.minutes, time.totalTime.seconds)}
+          </span>
         </div>
       </div>
       <div className="hidden opacity-75 items-center gap-2 lg:flex">
