@@ -7,7 +7,6 @@ import { albumsData } from "../assets/assets";
 
 const Display = () => {
   const location = useLocation();
-  console.log(location);
   const displayRef = useRef();
   const isAlbum = location.pathname.includes("album");
   const albumId = isAlbum ? location.pathname.slice(-1) : "";
