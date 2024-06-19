@@ -1,11 +1,9 @@
-import { createContext, useRef, useState, useEffect } from "react";
+import { createContext, useRef, useState, useEffect, useCallback } from "react";
 import { songsData } from "../assets/assets";
 
 export const PlayerContext = createContext();
 
 const PlayerContextProvider = (props) => {
-  // console.log("props>>>>>>>>", props);
-
   const audioRef = useRef();
   const seekBar = useRef();
   const backRef = useRef(null);
@@ -39,32 +37,23 @@ const PlayerContextProvider = (props) => {
 
   const playWithId = async (id) => {
     await setTrack(songsData[id]);
-    await audioRef.current.play();
-    setPlayerStatus(true);
   };
 
   const playPrevious = async () => {
     if (track.id > 0) {
       await setTrack(songsData[track.id - 1]);
-      await audioRef.current.play();
-      // backRef.current.classList.add("allowed");
-      setPlayerStatus(true);
     } else {
       backRef.current.classList.add("not-allowed");
     }
   };
 
-  const playNext = async () => {
-    console.log(track.id);
+  const playNext = useCallback(async () => {
     if (track.id < songsData.length - 1) {
       await setTrack(songsData[track.id + 1]);
-      await audioRef.current.play();
-      // nextRef.current.classList.add("allowed");
-      setPlayerStatus(true);
     } else {
       nextRef.current.classList.add("not-allowed");
     }
-  };
+  }, [track.id]);
 
   const skipForward = () => {
     audioRef.current.currentTime += 15;
@@ -75,32 +64,70 @@ const PlayerContextProvider = (props) => {
   };
 
   useEffect(() => {
-    setTimeout(() => {
-      audioRef.current.ontimeupdate = () => {
-        setTime({
-          currentTime: {
-            seconds: Math.floor(audioRef.current.currentTime % 60),
-            minutes: Math.floor(audioRef.current.currentTime / 60),
-          },
-          totalTime: {
-            seconds: Math.floor(audioRef.current.duration % 60),
-            minutes: Math.floor(audioRef.current.duration / 60),
-          },
-        });
+    const handleTimeUpdate = () => {
+      setTime({
+        currentTime: {
+          seconds: Math.floor(audioRef.current.currentTime % 60),
+          minutes: Math.floor(audioRef.current.currentTime / 60),
+        },
+        totalTime: {
+          seconds: Math.floor(audioRef.current.duration % 60),
+          minutes: Math.floor(audioRef.current.duration / 60),
+        },
+      });
 
-        if (seekBar.current) {
-          seekBar.current.value =
-            (audioRef.current.currentTime / audioRef.current.duration) * 100;
-        }
-      };
-    }, 1000);
-  }, [audioRef]);
+      if (seekBar.current) {
+        seekBar.current.value =
+          (audioRef.current.currentTime / audioRef.current.duration) * 100;
+      }
+    };
+
+    const handleEnded = () => {
+      playNext();
+    };
+
+    const audioElement = audioRef.current;
+    audioElement.addEventListener("timeupdate", handleTimeUpdate);
+    audioElement.addEventListener("ended", handleEnded);
+
+    return () => {
+      audioElement.removeEventListener("timeupdate", handleTimeUpdate);
+      audioElement.removeEventListener("ended", handleEnded);
+    };
+  }, [audioRef, playNext]);
 
   useEffect(() => {
-    if (audioRef) {
+    if (audioRef.current) {
       audioRef.current.volume = volume / 100;
     }
   }, [volume, audioRef]);
+
+  useEffect(() => {
+    const handleLoadedMetadata = () => {
+      setTime((prevTime) => ({
+        ...prevTime,
+        totalTime: {
+          seconds: Math.floor(audioRef.current.duration % 60),
+          minutes: Math.floor(audioRef.current.duration / 60),
+        },
+      }));
+    };
+
+    const audioElement = audioRef.current;
+    audioElement.addEventListener("loadedmetadata", handleLoadedMetadata);
+
+    return () => {
+      audioElement.removeEventListener("loadedmetadata", handleLoadedMetadata);
+    };
+  }, [track]);
+
+  useEffect(() => {
+    if (track) {
+      audioRef.current.load();
+      audioRef.current.play();
+      setPlayerStatus(true);
+    }
+  }, [track]);
 
   const contextValue = {
     audioRef,
