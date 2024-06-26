@@ -11,7 +11,10 @@ import {
   SkipBack,
   SkipForward,
   SquarePlay,
+  Volume,
   Volume1,
+  Volume2,
+  VolumeX,
 } from "lucide-react";
 import { PlayerContext } from "../context/PlayerContext";
 
@@ -38,6 +41,18 @@ const Player = () => {
     return `${minutes.toString().padStart(2, "0")}:${seconds
       .toString()
       .padStart(2, "0")}`;
+  };
+
+  const getVolumeIcon = (volume) => {
+    if (volume <= 0) {
+      return <VolumeX className="w-6" />;
+    } else if (volume >= 1 && volume <= 20) {
+      return <Volume className="w-6" />;
+    } else if (volume > 20 && volume <= 60) {
+      return <Volume1 className="w-6" />;
+    } else {
+      return <Volume2 className="w-6" />;
+    }
   };
 
   return (
@@ -88,7 +103,7 @@ const Player = () => {
             type="range"
             ref={seekBar}
             defaultValue={0}
-            className=" flex-grow accent-[#1ed760]"
+            className="flex-grow accent-white hover:accent-green-400"
             onChange={handleSeek}
           />
           <span className="text-sm">
@@ -96,12 +111,12 @@ const Player = () => {
           </span>
         </div>
       </div>
-      <div className="flex opacity-75 items-center gap-2 ">
-        <SquarePlay className="w-5 hidden lg:flex" />
+      <div className="flex opacity-75 items-center gap-2 pt-8 ">
+        {/* <SquarePlay className="w-5 hidden lg:flex" />
         <Mic2 className="w-5 hidden lg:flex" />
         <GalleryVertical className="w-5 hidden lg:flex" />
-        <MonitorSpeaker className="w-5 hidden lg:flex" />
-        <Volume1 className="w-5" />
+        <MonitorSpeaker className="w-5 hidden lg:flex" /> */}
+        {getVolumeIcon(volume)}
         <input
           type="range"
           min={0}
@@ -110,11 +125,11 @@ const Player = () => {
           value={volume}
           defaultValue={0}
           onChange={(e) => setVolume(e.target.value)}
-          className="accent-[#1ed760] w-20 sm:w-24 lg:w-36"
+          className="accent-white hover:accent-green-400 w-20 sm:w-24 lg:w-36"
         />
         <span className="text-sm">{volume}</span>
-        <PictureInPicture2 className="w-5 hidden lg:flex" />
-        <Maximize2 className="w-5 hidden lg:flex" />
+        {/* <PictureInPicture2 className="w-5 hidden lg:flex" />
+        <Maximize2 className="w-5 hidden lg:flex" /> */}
       </div>
     </div>
   );
